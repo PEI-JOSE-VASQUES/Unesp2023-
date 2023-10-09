@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <title>Unesp 2023</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+  <style>
+    body {
+      transition: background-color 1s ease-in-out;
+
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    #background {
+      position: fixed;
+      top: 50;
+      left: 50;
+      width: 98%;
+      height: 98%;
+      z-index: -1;
+      border-radius: 5%; 
+      overflow: hidden; 
+    }
+    .h1-text {
+      font-size: 15px; 
+      position: absolute; 
+      color: red;
+    }
+    .h2-text {
+      font-size: 40px; 
+      position: absolute; 
+      color: rgb(28, 234, 241);
+    }
+    .h2-2 { left: 42%; top: -2%; }
+    .h1-1 { left: 40%; top: 38%; }
+    .h1-2 { left: 40%; top: 61%; }
+    .h1-3 { left: 57%; top: 38%; }
+    .h1-4 { left: 57%; top: 61%; }
+    .h1-5 { left: 37%; top: 48%; }
+    .h1-6 { left: 55%; top: 48%; }
+    .h1-7 { left: 44%; top: 80%; }
+  </style>
+</head>
+<body>
+  <img id="background" src='https://github.com/PEI-JOSE-VASQUES/PEI-JOSE-VASQUES-/blob/main/ssssimagem.png?raw=true' alt='Imagem de Fundo'>
+  <h1 class='h1-text h1-1'><span id="sensor1"></span></h1>
+  <h1 class='h1-text h1-2'><span id="sensor2"></span></h1>
+  <h1 class='h1-text h1-3'><span id="sensor3"></span></h1>
+  <h1 class='h1-text h1-4'><span id="sensor4"></span></h1>
+  <h1 class='h1-text h1-5'><span id="sensor5"></span></h1>
+  <h1 class='h1-text h1-6'><span id="sensor6"></span></h1>
+  <h1 class='h1-text h1-7'><span id="Horario"></span></h1>
+  <h1 class='h2-text h2-2'>Unesp2023</span></h1>
+  <script>
+     
+    var firebaseConfig = {
+      apiKey: "AIzaSyC5WvJEibLKQM5_W_z2bX_Q_OHMDE3RE7c",
+	authDomain: "banco-de-dados-e77eb.firebaseapp.com",
+ 	databaseURL: "https://banco-de-dados-e77eb-default-rtdb.firebaseio.com",
+  	projectId: "banco-de-dados-e77eb",
+  	storageBucket: "banco-de-dados-e77eb.appspot.com",
+ 	messagingSenderId: "597423660776",
+  	appId: "1:597423660776:web:ac11ace84c2a9292c0735d",
+	measurementId: "G-VX8ZLG9V29"
+    };
+    firebase.initializeApp(firebaseConfig);
+    var parentNodeRef = firebase.database().ref('Unesp_sensorestmp');
+    function displayRealtimeData() {
+      parentNodeRef.on('value', function(snapshot) {
+        var parentData = snapshot.val();
+        document.getElementById('sensor1').innerText = parentData['sensor1'] || '';
+        document.getElementById('sensor2').innerText = parentData['sensor2'] || '';
+        document.getElementById('sensor3').innerText = parentData['sensor3'] || '';
+        document.getElementById('sensor4').innerText = parentData['sensor4'] || '';
+        document.getElementById('sensor5').innerText = parentData['sensor5'] || '';
+        document.getElementById('sensor6').innerText = parentData['sensor6'] || '';
+        document.getElementById('Horario').innerText = parentData['Horario'] || '';
+      }, function(error) {
+        console.error("Erro ao ler os dados dos nós filhos:", error);
+      });
+    }
+    function changeBackgroundColor() {
+      const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+      document.body.style.backgroundColor = `#${randomColor}`;
+    }
+    setInterval(changeBackgroundColor, 1000);
+    displayRealtimeData();
+  </script>
+</body>
+</html>
